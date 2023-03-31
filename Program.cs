@@ -1,10 +1,14 @@
-﻿namespace MSI_GeneticKeyboard
+﻿using MSI_GeneticKeyBoard;
+
+namespace MSI_GeneticKeyboard
 {
     internal class Program
     {
         private static void Main()
         {
-            Console.WriteLine("Start of the project");
+            Population population = new(Fitness.CalculateBasicFitness);
+
+            population.CreatePopulation();
         }
     }
 }
