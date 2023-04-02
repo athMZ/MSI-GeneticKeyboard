@@ -15,5 +15,10 @@
                 .OrderBy(x => rnd.Next())
                 .ToArray();
         }
+
+        public Element(int sampleFitness)
+        {
+            Fitness = sampleFitness;
+        }
     }
 }
