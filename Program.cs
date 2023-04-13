@@ -8,7 +8,7 @@ namespace MSI_GeneticKeyboard
     {
         private static int CandidateCountModifier()
         {
-            return Population.CurrentGeneration > 500 ? 40 : Params.DefaultCandidateCount;
+            return Population.CurrentGeneration > Params.GenerationCount / 2 ? 40 : Params.DefaultCandidateCount;
         }
 
         private static void Main()
@@ -32,6 +32,7 @@ namespace MSI_GeneticKeyboard
 
             logger.CreateSummary();
 
+            Console.ReadLine();
         }
     }
 }

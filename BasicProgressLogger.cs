@@ -10,8 +10,6 @@ namespace MSI_GeneticKeyBoard
     {
         public List<GenerationInfo> AverageFitness { get; set; } = new();
         public List<GenerationInfo> BestFitness { get; set; } = new();
-        public List<GenerationInfo> BestFitnessDelta { get; set; } = new();
-        public List<GenerationInfo> AverageFitnessDelta { get; set; } = new();
         public Element BestElement { get; set; } = new();
 
         public void LogProgress(Population population)
@@ -29,23 +27,6 @@ namespace MSI_GeneticKeyBoard
                     population.GetBestFitness()
                     )
                 );
-
-            if (Population.CurrentGeneration > 0)
-            {
-                AverageFitnessDelta.Add(
-                    new GenerationInfo(
-                        Population.CurrentGeneration,
-                        Math.Abs(population.GetAverageFitness() - AverageFitness[Population.CurrentGeneration-1].FitnessData)
-                    )
-                );
-
-                BestFitnessDelta.Add(
-                    new GenerationInfo(
-                        Population.CurrentGeneration,
-                        Math.Abs(population.GetBestFitness() - BestFitness[Population.CurrentGeneration - 1].FitnessData)
-                    )
-                );
-            }
 
             if (population.GetBestFitness() < BestElement.Fitness) BestElement = population.GetBestElement();
 
@@ -83,7 +64,7 @@ namespace MSI_GeneticKeyBoard
 
         private static void CombinePlots(List<Bitmap> bitmaps, string data)
         {
-            var width = bitmaps.Sum(x => x.Width) / 2;
+            var width = bitmaps.Sum(x => x.Width);
             var height = Params.PlotHeight * bitmaps.Count / 2 + Params.TextBoxHeight;
 
             var background = new Rectangle(0, 0, width, height);
@@ -174,8 +155,6 @@ namespace MSI_GeneticKeyBoard
             {
                 GeneratePlotFromLogData(AverageFitness, "Average Fitness for generation"),
                 GeneratePlotFromLogData(BestFitness, "Best Fitness for generation"),
-                GeneratePlotFromLogData(AverageFitnessDelta, "Average Fitness delta for generation"),
-                GeneratePlotFromLogData(BestFitnessDelta, "Best Fitness delta for generation")
             };
 
             sb.Append('\n' + FormatChromosome(BestElement.Chromosome));
